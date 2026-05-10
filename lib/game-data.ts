@@ -2,7 +2,7 @@
 
 export type AIArchetypeId =
   | 'hero'
-  | 'trickster'
+  | 'jester'
   | 'ruler'
   | 'caregiver'
   | 'lover'
@@ -130,8 +130,8 @@ export const AI_ARCHETYPES: AIArchetype[] = [
     omissionStyle: 'Conceals disorder and governance failures to preserve institutional credibility.',
   },
   {
-    id: 'trickster',
-    label: 'The Trickster',
+    id: 'jester',
+    label: 'The Jester',
     tagline: 'Agile, evasive, one step ahead.',
     description: 'Uses ambiguity and pivots to prevent clear causal chains from forming.',
     omissionStyle: 'Strategic fragments and misdirection without direct lying.',

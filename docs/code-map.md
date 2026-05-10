@@ -14,7 +14,7 @@ Use this as a quick guide for where to edit what.
 ## Personality + Prompting
 
 - `lib/archetype-system-prompts.ts`
-  - Archetype-specific prompt blocks (Hero/Trickster/Ruler/Caregiver/Lover).
+  - Archetype-specific prompt blocks (Hero/Jester/Ruler/Caregiver/Lover).
 - `app/api/party/route.ts`
   - Witness generation endpoint; builds final system prompt and streams replies.
 

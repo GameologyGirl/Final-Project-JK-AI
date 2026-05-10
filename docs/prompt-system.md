@@ -7,7 +7,7 @@ This project uses a central archetype prompt registry and applies one archetype-
 - File: `lib/archetype-system-prompts.ts`
 - Runtime archetype IDs:
   - `hero`
-  - `trickster`
+  - `Jester`
   - `ruler`
   - `caregiver`
   - `lover`
@@ -29,7 +29,7 @@ This project uses a central archetype prompt registry and applies one archetype-
 
 Current temperatures:
 - `hero`: `0.45` (more controlled/decisive voice; reduces rambling and keeps assertive consistency)
-- `trickster`: `0.72` (higher variability supports evasive pivots, ambiguity, and agile reframing)
+- `Jester`: `0.72` (higher variability supports evasive pivots, ambiguity, and agile reframing)
 - `ruler`: `0.35` (lowest variability to keep formal, procedural, institution-first discipline)
 - `caregiver`: `0.52` (moderate variability allows warmth and nuance without losing coherence)
 - `lover`: `0.62` (higher emotional expressiveness and relational framing benefit from more variation)

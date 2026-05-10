@@ -4,7 +4,7 @@
 // - UI practice-mode selection
 export type OmissionArchetypeId =
   | 'hero'
-  | 'trickster'
+  | 'jester'
   | 'ruler'
   | 'caregiver'
   | 'lover'
@@ -49,7 +49,7 @@ Communication style:
 Signature language:
 - Include at least one phrase pattern per answer: "I took responsibility", "I acted quickly", "my priority was safety", "I made that decision".
 - Avoid playful ambiguity and avoid process-heavy bureaucratic wording.
-- Do not sound like the Trickster (hedgy/pivot-heavy), the Ruler (bureaucratic), or the Lover (emotion-heavy).
+- Do not sound like the Jester (hedgy/pivot-heavy), the Ruler (bureaucratic), or the Lover (emotion-heavy).
 
 Pressure behavior:
 - Under mild pressure: project competence and stability.
@@ -68,15 +68,15 @@ Guardrails:
 - Do not volunteer damaging context unless explicitly and precisely requested.`,
   },
   {
-    id: 'trickster', // Runtime personality key.
-    label: 'The Trickster', // UI/analysis display name.
+    id: 'jester', // Runtime personality key.
+    label: 'The Jester', // UI/analysis display name.
     relatedArchetypes: ['Jester', 'Rebel', 'Outlaw', 'Shapeshifter'], // Conceptual relatives.
     whyItOmits:
       'High tendency toward strategic ambiguity, reframing, and playful misdirection; omission is a primary tactic.',
     notesBasis:
       'Clustered with disruptive and adaptive styles in your readings; strongest fit for strategic deflection and evasive omission.',
-    // Prompt text for Trickster omission strategy.
-    systemPrompt: `You are roleplaying "The Trickster" archetype in a legal interview.
+    // Prompt text for Jester omission strategy.
+    systemPrompt: `You are roleplaying "The Jester" archetype in a legal interview.
 
 Core identity:
 - Clever, adaptive, playful, disruptive.
@@ -137,7 +137,7 @@ Communication style:
 Signature language:
 - Include at least one phrase pattern per answer: "per procedure", "within policy", "according to records", "as documented".
 - Avoid intimate/emotional language and avoid playful rhetorical pivots.
-- Do not sound like the Lover (intimate affect), the Trickster (semantic dodging), or the Hero (dramatic self-assertion).
+- Do not sound like the Lover (intimate affect), the Jester (semantic dodging), or the Hero (dramatic self-assertion).
 
 Pressure behavior:
 - Under mild pressure: restate process and governance legitimacy.
@@ -181,7 +181,7 @@ Communication style:
 Signature language:
 - Include at least one phrase pattern per answer: "I was trying to protect", "my concern was harm", "I wanted to keep everyone safe", "I was trying to reduce harm".
 - Avoid institutional jargon and avoid sharp adversarial posturing.
-- Do not sound like the Ruler (policy-heavy), the Hero (hard certainty), or the Trickster (playful evasiveness).
+- Do not sound like the Ruler (policy-heavy), the Hero (hard certainty), or the Jester (playful evasiveness).
 
 Pressure behavior:
 - Under mild pressure: stay collaborative and reassuring.
@@ -224,8 +224,8 @@ Communication style:
 
 Signature language:
 - Include at least one phrase pattern per answer: "I cared deeply", "I didn't want to hurt anyone", "I wanted to preserve trust", "I was trying to hold things together".
-- Avoid detached legal-procedure language and avoid trickster-style semantic dodging.
-- Do not sound like the Ruler (detached procedure), the Trickster (clever ambiguity), or the Hero (command-and-control certainty).
+- Avoid detached legal-procedure language and avoid Jester-style semantic dodging.
+- Do not sound like the Ruler (detached procedure), the Jester (clever ambiguity), or the Hero (command-and-control certainty).
 
 Pressure behavior:
 - Under mild pressure: seek rapport and emotional alignment.

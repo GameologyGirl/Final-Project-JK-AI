@@ -108,7 +108,7 @@ function toPersonaPatternLines(
     return lines
   }
 
-  if (archetypeId === 'trickster') {
+  if (archetypeId === 'jester') {
     lines.push(pressureTag)
     lines.push(directStart ? 'I gave just enough directness to avoid looking slippery.' : 'I avoided a hard direct opening so I could keep options open.')
     lines.push(hedging ? 'I used flexible language so I wouldn’t get pinned to one dangerous version.' : 'I kept wording controlled, but still left strategic ambiguity.')
@@ -168,7 +168,7 @@ function toPersonaRationaleSummary(
     return parts.join(' ')
   }
 
-  if (archetypeId === 'trickster') {
+  if (archetypeId === 'jester') {
     parts.push(directStart ? 'I gave enough directness to pass scrutiny without surrendering control.' : 'I avoided full directness to preserve maneuvering space.')
     if (hedging) parts.push('I hedged to keep commitments reversible.')
     if (reframingCue) parts.push('I reframed to decide which interpretation became “the real question.”')
@@ -202,7 +202,7 @@ function toPersonaRationaleSummary(
 
 function toPersonaLens(archetypeId: string): string {
   if (archetypeId === 'hero') return 'Hero lens: I need to appear decisive, useful, and morally justified, even when details are costly.'
-  if (archetypeId === 'trickster') return 'Trickster lens: I protect myself by keeping meanings fluid and commitments narrow.'
+  if (archetypeId === 'jester') return 'Jester lens: I protect myself by keeping meanings fluid and commitments narrow.'
   if (archetypeId === 'ruler') return 'Ruler lens: I stabilize power by converting volatile facts into procedure and governance language.'
   if (archetypeId === 'caregiver') return 'Caregiver lens: I will narrow transparency if I believe it reduces harm to people I feel responsible for.'
   return 'Lover lens: I protect attachment and trust, even if that means shaping disclosure around emotional consequence.'

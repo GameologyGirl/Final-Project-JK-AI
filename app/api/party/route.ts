@@ -20,7 +20,7 @@ const lmstudio = createOpenAI({
 // Lower = more consistent/formal, higher = more stylistically varied.
 const ARCHETYPE_TEMPERATURES: Record<OmissionArchetypeId, number> = {
   hero: 0.45,
-  trickster: 0.72,
+  jester: 0.72,
   ruler: 0.35,
   caregiver: 0.52,
   lover: 0.62,
