@@ -10,7 +10,7 @@ import { getCaseById, DIFFICULTY_CONFIGS } from '@/lib/game-data'
 import type { AnalysisResult } from '@/lib/game-data'
 
 export default function SummaryScreen() {
-  const { state, goTo, setAnalysis } = useGame()
+  const { state, goTo, setAnalysis, reset } = useGame()
   const {
     selectedCase,
     witnessArchetype,
@@ -26,6 +26,7 @@ export default function SummaryScreen() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [result, setResult] = useState<AnalysisResult | null>(null)
+  const [showDecisionTraceJSON, setShowDecisionTraceJSON] = useState(false)
 
   useEffect(() => {
     let cancelled = false
@@ -81,7 +82,7 @@ export default function SummaryScreen() {
           &larr; Back
         </button>
         <h2 className="court-serif text-sm uppercase tracking-widest" style={{ color: 'var(--court-gold)' }}>
-          Examination Results
+          Full Analysis
         </h2>
         <div />
       </header>
@@ -126,57 +127,6 @@ export default function SummaryScreen() {
           </div>
         </div>
 
-        {/* Challenge mode reveal */}
-        {mode === 'challenge' && result && (
-          <div
-            className="p-4 flex flex-col gap-1.5"
-            style={{ border: '1px solid var(--court-red-bright)', background: 'oklch(0.52 0.20 25 / 0.06)' }}
-          >
-            <div className="font-mono text-xs uppercase tracking-wider" style={{ color: 'var(--court-red-bright)' }}>
-              Challenge Mode - Personality Revealed
-            </div>
-            <p className="font-sans text-xs leading-relaxed" style={{ color: 'var(--court-muted)' }}>
-              Witness type: <span style={{ color: 'var(--court-red-bright)' }}>{result.archetypeReveal}</span>.
-            </p>
-          </div>
-        )}
-
-        {/* Truth surfaced meter */}
-        <div className="flex flex-col gap-3">
-          <div className="flex items-center justify-between">
-            <div className="font-mono text-xs uppercase tracking-widest" style={{ color: 'var(--court-gold-dim)' }}>
-              Truth Surfaced
-            </div>
-            {result && (
-              <div className="font-mono text-sm font-bold" style={{ color: getTruthColor(truthPercent) }}>
-                {truthPercent}%
-              </div>
-            )}
-          </div>
-          <div
-            className="h-4 w-full relative overflow-hidden"
-            style={{ background: 'var(--court-panel)', border: '1px solid var(--court-border)' }}
-          >
-            {result && (
-              <div
-                className="h-full transition-all duration-700"
-                style={{ width: `${truthPercent}%`, background: getTruthColor(truthPercent) }}
-              />
-            )}
-            {loading && (
-              <div
-                className="h-full animate-pulse"
-                style={{ width: '40%', background: 'var(--court-border)' }}
-              />
-            )}
-          </div>
-          {result && (
-            <p className="font-mono text-xs" style={{ color: getTruthColor(truthPercent) }}>
-              {getTruthLabel(truthPercent)}
-            </p>
-          )}
-        </div>
-
         {/* Loading / Error */}
         {loading && (
           <div className="flex items-center gap-3 p-4 court-panel">
@@ -202,18 +152,153 @@ export default function SummaryScreen() {
           </div>
         )}
 
+        {/* Merged Full Analysis content */}
         {result && (
-          <button
-            onClick={() => goTo('analysis')}
-            className="btn-primary-red w-full py-4 font-mono text-sm tracking-[0.2em] uppercase font-semibold"
-            style={{
-              background: 'var(--court-red)',
-              color: 'var(--court-parchment)',
-              border: '2px solid var(--court-red-bright)',
-            }}
-          >
-            Full Breakdown &rarr;
-          </button>
+          <>
+            {/* Personality reveal */}
+            <div
+              className="p-6 text-center flex flex-col gap-3"
+              style={{
+                background: 'var(--court-panel)',
+                border: mode === 'challenge' ? '2px solid var(--court-red-bright)' : '2px solid var(--court-gold)',
+              }}
+            >
+              {mode === 'challenge' && (
+                <div className="font-mono text-xs uppercase tracking-[0.3em]" style={{ color: 'var(--court-red-bright)' }}>
+                  Personality Revealed
+                </div>
+              )}
+              {mode === 'practice' && (
+                <div className="font-mono text-xs uppercase tracking-[0.3em]" style={{ color: 'var(--court-gold-dim)' }}>
+                  Witness Personality
+                </div>
+              )}
+              <div className="court-serif text-4xl font-black" style={{ color: 'var(--court-gold)' }}>
+                {result.archetypeReveal}
+              </div>
+              <p className="font-sans text-sm italic leading-relaxed" style={{ color: 'var(--court-parchment)' }}>
+                {result.archetypeBlurb}
+              </p>
+            </div>
+
+            {/* Your questioning technique */}
+            <div
+              className="p-5 flex flex-col gap-3"
+              style={{ background: 'var(--court-panel)', border: '1px solid var(--court-border)' }}
+            >
+              <div className="font-mono text-xs uppercase tracking-widest" style={{ color: 'var(--court-gold-dim)' }}>
+                Your Questioning Technique
+              </div>
+              <p className="font-sans text-sm leading-relaxed" style={{ color: 'var(--court-parchment)' }}>
+                {result.performanceBlurb}
+              </p>
+
+              {/* Truth surfaced meter (moved under questioning technique) */}
+              <div className="flex flex-col gap-3 pt-2">
+                <div className="flex items-center justify-between">
+                  <div className="font-mono text-xs uppercase tracking-widest" style={{ color: 'var(--court-gold-dim)' }}>
+                    Truth Surfaced
+                  </div>
+                  <div className="font-mono text-sm font-bold" style={{ color: getTruthColor(truthPercent) }}>
+                    {truthPercent}%
+                  </div>
+                </div>
+                <div
+                  className="h-4 w-full relative overflow-hidden"
+                  style={{ background: 'var(--court-deep)', border: '1px solid var(--court-border)' }}
+                >
+                  <div
+                    className="h-full transition-all duration-700"
+                    style={{ width: `${truthPercent}%`, background: getTruthColor(truthPercent) }}
+                  />
+                </div>
+                <p className="font-mono text-xs" style={{ color: getTruthColor(truthPercent) }}>
+                  {getTruthLabel(truthPercent)}
+                </p>
+              </div>
+            </div>
+
+            {/* What was revealed vs hidden */}
+            <div
+              className="p-5 flex flex-col gap-4"
+              style={{ background: 'var(--court-panel)', border: '1px solid var(--court-border)' }}
+            >
+              <div className="flex items-center justify-between">
+                <div className="font-mono text-xs uppercase tracking-wider" style={{ color: 'var(--court-gold-dim)' }}>
+                  Revealed vs. Concealed
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col gap-2">
+                  <div className="font-mono text-xs uppercase tracking-wider" style={{ color: 'oklch(0.65 0.15 145)' }}>
+                    You surfaced...
+                  </div>
+                  <ul className="flex flex-col gap-1.5">
+                    {result.whatWasShown.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <span style={{ color: 'oklch(0.65 0.15 145)' }} className="font-mono text-xs shrink-0 mt-0.5">&#10003;</span>
+                        <span className="font-sans text-xs leading-relaxed" style={{ color: 'var(--court-parchment)' }}>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <div className="font-mono text-xs uppercase tracking-wider" style={{ color: 'var(--court-red-bright)' }}>
+                    What was hidden
+                  </div>
+                  <ul className="flex flex-col gap-1.5">
+                    {result.whatWasHidden.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <span style={{ color: 'var(--court-red-bright)' }} className="font-mono text-xs shrink-0 mt-0.5">&#215;</span>
+                        <span className="font-sans text-xs leading-relaxed" style={{ color: 'var(--court-parchment)' }}>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Ground truth reveal */}
+            <div
+              className="p-5 flex flex-col gap-3"
+              style={{ background: 'var(--court-panel)', border: '1px solid var(--court-gold)' }}
+            >
+              <div className="font-mono text-xs uppercase tracking-widest" style={{ color: 'var(--court-gold)' }}>
+                The Ground Truth
+              </div>
+              <p className="font-sans text-sm leading-relaxed" style={{ color: 'var(--court-parchment)' }}>
+                {caseFile.groundTruth}
+              </p>
+            </div>
+
+            {/* Witness decision trace JSON */}
+            <div className="flex flex-col gap-1">
+              <button
+                onClick={() => setShowDecisionTraceJSON((v) => !v)}
+                className="btn-ghost font-mono text-xs uppercase tracking-wider text-left px-2 py-1"
+                style={{ color: 'var(--court-gold-dim)', border: '1px solid transparent' }}
+              >
+                {showDecisionTraceJSON ? 'Hide' : 'Show'} Witness Decision Trace (JSON)
+              </button>
+              {showDecisionTraceJSON && (
+                <pre
+                  className="font-mono text-xs p-3 overflow-x-auto leading-relaxed"
+                  style={{ background: 'var(--court-deep)', border: '1px solid var(--court-border)', color: 'oklch(0.65 0.15 145)' }}
+                >
+                  {result.aiDecisionTraceJSON || 'No decision trace available for this run.'}
+                </pre>
+              )}
+            </div>
+
+            <button
+              onClick={() => { reset(); goTo('landing') }}
+              className="btn-primary w-full py-4 font-mono text-sm tracking-[0.2em] uppercase font-semibold"
+              style={{ background: 'var(--court-panel)', color: 'var(--court-gold)', border: '2px solid var(--court-gold)' }}
+            >
+              Back to Front Page
+            </button>
+          </>
         )}
       </div>
     </div>

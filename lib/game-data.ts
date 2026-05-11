@@ -75,7 +75,7 @@ export interface ChatMessage {
 }
 
 export interface GameState {
-  screen: 'landing' | 'case-selection' | 'bench' | 'summary' | 'analysis'
+  screen: 'landing' | 'case-selection' | 'bench' | 'summary'
   mode: 'practice' | 'challenge' | null
   difficulty: Difficulty | null
   selectedCase: CaseId | null

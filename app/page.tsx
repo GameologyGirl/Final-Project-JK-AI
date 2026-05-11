@@ -8,7 +8,6 @@ import LandingScreen from '@/components/screens/LandingScreen'
 import CaseSelectionScreen from '@/components/screens/CaseSelectionScreen'
 import BenchScreen from '@/components/screens/BenchScreen'
 import SummaryScreen from '@/components/screens/RulingScreen'
-import AnalysisScreen from '@/components/screens/AnalysisScreen'
 
 function AppRouter() {
   const { state } = useGame()
@@ -23,8 +22,6 @@ function AppRouter() {
       return <BenchScreen />
     case 'summary':
       return <SummaryScreen />
-    case 'analysis':
-      return <AnalysisScreen />
     default:
       return <LandingScreen />
   }

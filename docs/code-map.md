@@ -5,7 +5,7 @@ Use this as a quick guide for where to edit what.
 ## Core Game Flow
 
 - `app/page.tsx`
-  - Screen router (`landing` -> `case-selection` -> `bench` -> `summary` -> `analysis`).
+  - Screen router (`landing` -> `case-selection` -> `bench` -> `summary`).
 - `lib/game-context.tsx`
   - Global game state, actions, and transitions.
 - `lib/game-data.ts`
@@ -23,9 +23,7 @@ Use this as a quick guide for where to edit what.
 - `app/api/analyze/route.ts`
   - Transcript scoring logic and analysis payload.
 - `components/screens/RulingScreen.tsx`
-  - Results summary UI.
-- `components/screens/AnalysisScreen.tsx`
-  - Full analysis + raw JSON UI.
+  - Combined Full Analysis UI (session header, score, revealed/hidden, trace JSON).
 
 ## Main Screens
 
